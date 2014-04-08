@@ -30,10 +30,8 @@ public class Gamecanvas extends Canvas{
             }
         }
     }
-    private void getRect(int xPos, int yPos) {
-        
-    }
     public void drawPos(int xPos, int yPos, Color color) {
+        System.out.println("asdf");
         gc.setFill(color);
         gc.fillRect(xGrid[xPos][yPos], yGrid[xPos][yPos], RECT_WIDTH, RECT_HEIGHT);
     }  

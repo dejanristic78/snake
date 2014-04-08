@@ -18,14 +18,16 @@ public class Clock implements Runnable{
 
     @Override
     public void run() {
-        System.out.println("qqq");
-        try {
-            Thread.sleep(500);
-        } catch (InterruptedException ex) {
-            Logger.getLogger(Clock.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        for(Snake s : snakes) {
-            s.update();
+        int count = 0;
+        while(count++ < 10) {
+            try {
+                Thread.sleep(500);
+            } catch (InterruptedException ex) {
+                Logger.getLogger(Clock.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            for(Snake s : snakes) {
+                s.update();
+            }
         }
     }
     

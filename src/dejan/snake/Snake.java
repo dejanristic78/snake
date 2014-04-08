@@ -3,16 +3,14 @@ package dejan.snake;
 
 import javafx.scene.paint.Color;
 
-public class Snake {
-    private final Gamecanvas canvas;
-    int a = 0;
+public class Snake extends GameObject{
+    private enum direction{ UP, DOWN, LEFT, RIGHT }
+    private direction moveDirection = direction.LEFT;
     
     public Snake(Gamecanvas canvas) {
-        this.canvas = canvas;
+        super(canvas);
     }
+    @Override
     public void update() {
-        
-        canvas.drawPos(a, a, Color.BROWN);
-        a++;
     }
 }
