@@ -9,23 +9,26 @@ import javafx.scene.paint.Color;
 public class Player extends GameEntity implements EventHandler<KeyEvent>{
     private class BodySegment{
         private BodySegment nextSegment;
-        private int segmentNr;
+        private final int segmentNr;
         private int xPos;
         private int yPos;
         public BodySegment(int xPos, int yPos, int segmentNr) {
             this.xPos = xPos;
             this.yPos = yPos;
             this.segmentNr = segmentNr;
-            
-            if(segmentNr < bodyLength) {
-                nextSegment = new BodySegment(xPos, yPos, ++segmentNr);
+            tryGrow();
+        }
+        
+        private void tryGrow() {
+            int nextSegmentNr = segmentNr + 1;
+            if(nextSegmentNr < bodyLength) {
+                nextSegment = new BodySegment(xPos, yPos, nextSegmentNr);
             }
             else {
                 nextSegment = null;
+                tail = this;
             }
         }
-        
-        
         
         public void update(int xPos, int yPos) {
             if(nextSegment == null) {
@@ -37,17 +40,19 @@ public class Player extends GameEntity implements EventHandler<KeyEvent>{
             
             this.xPos = xPos;
             this.yPos = yPos;
+              
             canvas.drawBlock(this.xPos, this.yPos, COLOR);
         }
         
     }
     
-    private final static int INIT_SIZE = 3;
-    private final static int GROW_SIZE = 3;
+    private final static int INIT_SIZE = 4;
+    private final static float GROW_FACTOR = 2f;
     private final static Color COLOR = Color.BLUE;
     
     private BodySegment head;
-    private int bodyLength = 3;
+    private BodySegment tail;
+    private int bodyLength = INIT_SIZE;
 
     public static enum Direction{ UP, DOWN, LEFT, RIGHT }
     private Direction moveDirection;
@@ -60,6 +65,7 @@ public class Player extends GameEntity implements EventHandler<KeyEvent>{
 
     public Player(GameCanvas canvas, Food food) {
         super(canvas);
+        tail = null;
         head = new BodySegment(xPos, yPos, 0);
         this.food = food;
     }
@@ -75,7 +81,8 @@ public class Player extends GameEntity implements EventHandler<KeyEvent>{
         head.update(xPos, yPos);
         
         if( food.foundItem(this) ) {
-            bodyLength += GROW_SIZE;
+            bodyLength = (int)(bodyLength * GROW_FACTOR);
+            tail.tryGrow();
         }
     }
     @Override
