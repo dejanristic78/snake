@@ -4,11 +4,11 @@ import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 
-public class Gamecanvas extends Canvas{
+public class GameCanvass extends Canvas{
     private final static int WIDTH = 200;
     private final static int HEIGHT = 200;
-    private final int X_GRID_SIZE = 20;
-    private final int Y_GRID_SIZE = 20;
+    public final int X_GRID_SIZE = 20;
+    public final int Y_GRID_SIZE = 20;
     private final int RECT_WIDTH = WIDTH / X_GRID_SIZE;
     private final int RECT_HEIGHT = HEIGHT / Y_GRID_SIZE;
     
@@ -19,7 +19,7 @@ public class Gamecanvas extends Canvas{
     
     GraphicsContext gc;
     
-    public Gamecanvas() {
+    public GameCanvass() {
         super(WIDTH, HEIGHT);
         gc = getGraphicsContext2D();
         
@@ -35,4 +35,9 @@ public class Gamecanvas extends Canvas{
         gc.setFill(color);
         gc.fillRect(xGrid[xPos][yPos], yGrid[xPos][yPos], RECT_WIDTH, RECT_HEIGHT);
     }  
+    public void clear() {
+        gc.setFill(Color.WHITE);
+        gc.fillRect(0, 0, 200, 200);
+        
+    }
 }

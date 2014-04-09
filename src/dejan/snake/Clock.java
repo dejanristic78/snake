@@ -6,13 +6,13 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class Clock implements Runnable{
-    private List<Snake> snakes; 
+    private List<Player> snakes; 
     
     
     public Clock() {
         snakes = new ArrayList<>();
     }
-    public void addSnake(Snake snake) {
+    public void addSnake(Player snake) {
         snakes.add(snake);
     }
 
@@ -25,7 +25,7 @@ public class Clock implements Runnable{
             } catch (InterruptedException ex) {
                 Logger.getLogger(Clock.class.getName()).log(Level.SEVERE, null, ex);
             }
-            for(Snake s : snakes) {
+            for(Player s : snakes) {
                 s.update();
             }
         }
