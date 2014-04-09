@@ -42,15 +42,19 @@ public class GuiApplication extends Application{
         
         
         
-        Player p1 = new Player(canvas);
+        Food food = new Food(canvas);
+        Player p1 = new Player(canvas, food);
         scene.setOnKeyPressed(p1);
         gameEntities.add(p1);
         
-        Timeline tl = new Timeline(new KeyFrame(Duration.millis(800), new EventHandler<ActionEvent>() {
+        
+        
+        Timeline tl = new Timeline(new KeyFrame(Duration.millis(600), new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
                 for(GameEntity e : gameEntities) {
-                    e.update();
+                    p1.update();
+                    food.update();
                 }
             }
         }));
