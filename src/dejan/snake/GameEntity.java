@@ -5,5 +5,5 @@ public abstract class GameEntity {
     public GameEntity(GameCanvas canvas) {
         this.canvas = canvas;
     }
-    public abstract void update();
+    protected abstract void update();
 }

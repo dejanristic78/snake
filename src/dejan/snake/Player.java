@@ -1,9 +1,12 @@
 
 package dejan.snake;
 
+import javafx.event.EventHandler;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.paint.Color;
 
-public class Player extends GameEntity{
+public class Player extends GameEntity implements EventHandler<KeyEvent>{
     private class BodySegment{
         private BodySegment nextSegment;
         private final int segmentNr;
@@ -22,13 +25,8 @@ public class Player extends GameEntity{
             
         }
         public void update(int xPos, int yPos) {
-            Color color;
-            //if(segmentNr == bodyLength) color = Color.WHITE;
-            //else color = Color.BLUE;
-            
-            
             if(nextSegment == null) {
-                canvas.drawPos(this.xPos, this.yPos, Color.WHITE);
+                canvas.drawBlock(this.xPos, this.yPos, Color.WHITE);
             }
             else { 
                 nextSegment.update(this.xPos, this.yPos); 
@@ -36,26 +34,55 @@ public class Player extends GameEntity{
             
             this.xPos = xPos;
             this.yPos = yPos;
-            canvas.drawPos(this.xPos, this.yPos, Color.BLUE);
+            canvas.drawBlock(this.xPos, this.yPos, Color.BLUE);
         }
         
     }
-    private static enum direction{ UP, DOWN, LEFT, RIGHT }
-    private direction moveDirection = direction.LEFT;
     
     private BodySegment head;
     private int bodyLength = 3;
-    int a = 5;
+
+    public static enum Direction{ UP, DOWN, LEFT, RIGHT }
+    private Direction moveDirection = Direction.LEFT;
     
+    private int xPos = 5;
+    private int yPos = 5;
+    
+
     public Player(GameCanvas canvas) {
         super(canvas);
-        head = new BodySegment(5, 5, 0);
+        head = new BodySegment(xPos, yPos, 0);
     }
     @Override
     public void update() {
-        a++;
-        //canvas.drawPos(a, a, Color.BLUE);
-        canvas.clear();
-        head.update(a, a);
+        switch(moveDirection) {
+            case UP:    yPos--;     break;
+            case DOWN:  yPos++;     break;
+            case LEFT:  xPos--;     break;
+            case RIGHT: xPos++;     break;
+        }
+        head.update(xPos, yPos);
+    }
+    @Override
+    public void handle(KeyEvent event) {
+        final KeyCode keyCode = event.getCode();
+        switch(keyCode) {
+            case UP:
+                if(moveDirection != Direction.DOWN)
+                    moveDirection = Direction.UP;       
+                break;
+            case DOWN:  
+                if(moveDirection != Direction.UP)
+                    moveDirection = Direction.DOWN;     
+                break;
+            case LEFT:  
+                if(moveDirection != Direction.RIGHT)
+                    moveDirection = Direction.LEFT;     
+                break;
+            case RIGHT: 
+                if(moveDirection != Direction.LEFT)
+                    moveDirection = Direction.RIGHT;    
+                break;
+        }
     }
 }
