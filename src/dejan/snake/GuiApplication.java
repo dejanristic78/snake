@@ -37,7 +37,7 @@ public class GuiApplication extends Application{
         StackPane root = new StackPane();
         Scene scene = new Scene(root, 300, 300);
         
-        GameCanvass canvas = new GameCanvass();
+        GameCanvas canvas = new GameCanvas();
         GraphicsContext gc = canvas.getGraphicsContext2D();
         
         root.getChildren().add(canvas);

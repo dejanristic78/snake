@@ -47,7 +47,7 @@ public class Player extends GameEntity{
     private int bodyLength = 3;
     int a = 5;
     
-    public Player(GameCanvass canvas) {
+    public Player(GameCanvas canvas) {
         super(canvas);
         head = new BodySegment(5, 5, 0);
     }

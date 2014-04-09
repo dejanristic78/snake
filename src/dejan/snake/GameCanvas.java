@@ -4,7 +4,7 @@ import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 
-public class GameCanvass extends Canvas{
+public class GameCanvas extends Canvas{
     private final static int WIDTH = 200;
     private final static int HEIGHT = 200;
     public final int X_GRID_SIZE = 20;
@@ -19,7 +19,7 @@ public class GameCanvass extends Canvas{
     
     GraphicsContext gc;
     
-    public GameCanvass() {
+    public GameCanvas() {
         super(WIDTH, HEIGHT);
         gc = getGraphicsContext2D();
         
