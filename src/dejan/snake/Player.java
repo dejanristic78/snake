@@ -43,6 +43,11 @@ public class Player extends GameEntity implements EventHandler<KeyEvent>{
               
             canvas.drawBlock(this.xPos, this.yPos, COLOR);
         }
+        public boolean occupies(int xPos, int yPos) {
+            if(this.xPos == xPos && this.yPos == yPos) return true;
+            else if(nextSegment == null) return false;
+            else return nextSegment.occupies(xPos, yPos);
+        }
         
     }
     
@@ -50,7 +55,7 @@ public class Player extends GameEntity implements EventHandler<KeyEvent>{
     private final static float GROW_FACTOR = 2f;
     private final static Color COLOR = Color.BLUE;
     
-    private BodySegment head;
+    private BodySegment body;
     private BodySegment tail;
     private int bodyLength = INIT_SIZE;
 
@@ -61,13 +66,11 @@ public class Player extends GameEntity implements EventHandler<KeyEvent>{
     private int xPos = 5;
     private int yPos = 5;
     
-    private Food food;
 
-    public Player(GameCanvas canvas, Food food) {
+    public Player(GameCanvas canvas) {
         super(canvas);
         tail = null;
-        head = new BodySegment(xPos, yPos, 0);
-        this.food = food;
+        body = new BodySegment(xPos, yPos, 0);
     }
     @Override
     public void update() {
@@ -78,12 +81,8 @@ public class Player extends GameEntity implements EventHandler<KeyEvent>{
             case LEFT:  xPos--;     break;
             case RIGHT: xPos++;     break;
         }
-        head.update(xPos, yPos);
+        body.update(xPos, yPos);
         
-        if( food.foundItem(this) ) {
-            bodyLength = (int)(bodyLength * GROW_FACTOR);
-            tail.tryGrow();
-        }
     }
     @Override
     public void handle(KeyEvent event) {
@@ -106,6 +105,13 @@ public class Player extends GameEntity implements EventHandler<KeyEvent>{
                     nextMoveDirection = Direction.RIGHT;    
                 break;
         }
+    }
+    public boolean occupies(int xPos, int yPos) {
+        return body.occupies(xPos, yPos);
+    }
+    public void foundFood() {
+        bodyLength = (int)(bodyLength * GROW_FACTOR);
+        tail.tryGrow();
     }
 
     public int getXPos() {

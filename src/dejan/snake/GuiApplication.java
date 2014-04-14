@@ -9,9 +9,7 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Scene;
 import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.StackPane;
-import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
@@ -42,8 +40,8 @@ public class GuiApplication extends Application{
         
         
         
-        Food food = new Food(canvas);
-        Player p1 = new Player(canvas, food);
+        Player p1 = new Player(canvas);
+        Food food = new Food(canvas, p1);
         scene.setOnKeyPressed(p1);
         gameEntities.add(p1);
         
@@ -53,8 +51,8 @@ public class GuiApplication extends Application{
             @Override
             public void handle(ActionEvent event) {
                 for(GameEntity e : gameEntities) {
-                    p1.update();
                     food.update();
+                    p1.update();
                 }
             }
         }));

@@ -6,54 +6,37 @@ import java.util.Random;
 import javafx.scene.paint.Color;
 
 public class Food extends GameEntity{
-    public class FoodItem {
-        private final int xPos; 
-        private final int yPos; 
-
-        public FoodItem(int xPos, int yPos) {
-            this.xPos = xPos;
-            this.yPos = yPos;
-            canvas.drawBlock(this.xPos, this.yPos, Color.GREEN);
-        }
-        
-    }
-    private static final int INITIAL_NR_FOOD_ITEMS = 9;
-    private static List<FoodItem> foodItems;
+    private final static Color COLOR = Color.GOLD;
+    private int xPos; 
+    private int yPos; 
+    private final Player player;
     
     
-    public Food(GameCanvas gameCanvas) {
+    public Food(GameCanvas gameCanvas, Player player) {
         super(gameCanvas);
-        placeFoodItems();
+        this.player = player;
+        placeFood();
     }
-    private void placeFoodItems() {
+    private void placeFood() {
         Random rand = new Random();
-        foodItems = new ArrayList<>(INITIAL_NR_FOOD_ITEMS);
-        for(int i = 0; i < INITIAL_NR_FOOD_ITEMS; i++) {
-            int xPos = rand.nextInt(canvas.X_GRID_SIZE);
-            int yPos = rand.nextInt(canvas.Y_GRID_SIZE);
-            foodItems.add( new FoodItem(xPos, yPos) );
-            System.out.println("x: "+xPos+"y: "+yPos);
-        }
+        int xPos;
+        int yPos;
+        do {
+            xPos = rand.nextInt(canvas.X_GRID_SIZE);
+            yPos = rand.nextInt(canvas.Y_GRID_SIZE);
+        } while( player.occupies(xPos, yPos) );
+        this.xPos = xPos;
+        this.yPos = yPos;
     }
     @Override
     public void update() {
-    }
-    public boolean foundItem(Player player) {
-        FoodItem found = null;
-        for(FoodItem fi : foodItems) {
-            if( fi.xPos == player.getXPos() && fi.yPos == player.getYPos() ) {
-                found = fi;
-                break;
-            }
-        }
-        if(found == null) {
-            return false;
-        }
-        else {
-            foodItems.remove(found);
-            System.out.println("Food items left: "+foodItems.size());
-            return true;
+        canvas.drawBlock(xPos, yPos, COLOR);
+        if( player.occupies(xPos, yPos) ) {
+            System.out.println("Food found");
+            player.foundFood();
+            placeFood();
         }
     }
+    
     
 }
