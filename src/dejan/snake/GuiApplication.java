@@ -47,7 +47,7 @@ public class GuiApplication extends Application{
         
         
         
-        Timeline tl = new Timeline(new KeyFrame(Duration.millis(600), new EventHandler<ActionEvent>() {
+        Timeline tl = new Timeline(new KeyFrame(Duration.millis(400), new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
                 for(GameEntity e : gameEntities) {
