@@ -6,7 +6,7 @@ import java.util.Random;
 import javafx.scene.paint.Color;
 
 public class Food extends GameEntity{
-    private final static Color COLOR = Color.GOLD;
+    private final static Color COLOR = Color.GREEN;
     private int xPos; 
     private int yPos; 
     private final Player player;
@@ -22,15 +22,15 @@ public class Food extends GameEntity{
         int xPos;
         int yPos;
         do {
-            xPos = rand.nextInt(canvas.X_GRID_SIZE);
-            yPos = rand.nextInt(canvas.Y_GRID_SIZE);
+            xPos = rand.nextInt(gameCanvas.X_GRID_SIZE);
+            yPos = rand.nextInt(gameCanvas.Y_GRID_SIZE);
         } while( player.occupies(xPos, yPos) );
         this.xPos = xPos;
         this.yPos = yPos;
     }
     @Override
     public void update() {
-        canvas.drawBlock(xPos, yPos, COLOR);
+        gameCanvas.drawBlock(xPos, yPos, COLOR);
         if( player.occupies(xPos, yPos) ) {
             System.out.println("Food found");
             player.foundFood();

@@ -32,7 +32,7 @@ public class Player extends GameEntity implements EventHandler<KeyEvent>{
         
         public void update(int xPos, int yPos) {
             if(nextSegment == null) {
-                canvas.drawBlock(this.xPos, this.yPos, Color.WHITE);
+                gameCanvas.drawBlock(this.xPos, this.yPos, Color.WHITE);
             }
             else { 
                 nextSegment.update(this.xPos, this.yPos); 
@@ -41,7 +41,7 @@ public class Player extends GameEntity implements EventHandler<KeyEvent>{
             this.xPos = xPos;
             this.yPos = yPos;
               
-            canvas.drawBlock(this.xPos, this.yPos, COLOR);
+            gameCanvas.drawBlock(this.xPos, this.yPos, COLOR);
         }
         public boolean occupies(int xPos, int yPos) {
             if(this.xPos == xPos && this.yPos == yPos) return true;
